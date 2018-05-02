@@ -1,0 +1,33 @@
+CPU DRIVER:
+CPU's start in real mode (16bit) by default, this allows you to access 1MB+64KB-16B of memory
+To turn CPU into protected mode (32bit)
+
+CLI
+LGDT [GDTR]
+MOV EAX, CR0
+OR AL, 1
+MOV CR0, EAX
+JMP 08h:PModeMain
+
+
+Registers - Memory that is faster then even the RAM, however there is a limited number of registers with small amounts of space.
+Segment:Offset=Segmentx16+Offset
+
+RAX, RBX, RCX, RDX - Main 64 bit registers for general use
+R8 through R15 - New extra registers for 64 bit only
+EAX, EBX, ECX, EDX - Main 32 bit registers for general use
+AX/BX/CX/DX - Main 16 bit registers for general use; Can be 8 bit AX=AH and AL
+BP/SP/DI/SI/IP -
+CS - Code Segment
+DS - Data Segment
+ES - Extra Segment
+FS 
+GS
+SS - Stack Segment
+GDT - Register that stores information about other registers
+The GDT register is 48 bits long, 16 bits for size then 32 bits of location in memory
+lgdt [gdtr] will load the gdt
+
+Interupts
+CLI - Disables Interupts
+STI - Enables Interupts
